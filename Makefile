@@ -12,8 +12,7 @@ docker:
 	
 run: 
 	docker run ${run_flags} --name ${container_name} \
-		-p 80:80 \
-		--network="host" \
+		-p 127.0.0.1:80:80 \
         ${docker_name}:${docker_tag}
 
 stop:

@@ -5,13 +5,13 @@ local httpd = require('http.server')
 local log = require('log')
 local json = require('json')
 
-box.cfg{}
+box.cfg{
+	log = 'tarantool.log'
+}
 
-box.once(
-	'schema', 
+box.once('schema', 
 	function()
-		box.schema.create_space(
-			'kv_store',
+		box.schema.create_space('kv_store',
 			{ 
 				format = {
 					{ name = 'key';   type = 'string' },
@@ -20,32 +20,27 @@ box.once(
 				if_not_exists = true;
 			}
 		)
-		box.space.kv_store:create_index(
-			'primary', 
-			{ 
-				type = 'hash'; 
-				parts = {1, 'string'}; 
-				if_not_exists = true;
-			}
+		box.space.kv_store:create_index('primary', 
+			{ type = 'hash'; parts = {1, 'string'}; if_not_exists = true; }
 		)
 	end
 )
 
 local function create(req)
 	local body = req:json()
-	-- log.info( json.encode(body) )
 	local key = body['key']
 
 	local duplicate = box.space.kv_store:select(key)
 	if ( table.getn(duplicate) ~= 0 ) then
-		local resp = req:render{ json = { status = "duplicate keys" }}
+		local resp = req:render{json = { info = "duplicate keys" }}
 		resp.status = 409
 		return resp
 	end
+	
 
 	box.space.kv_store:insert{ key, body['value'] }
 
-	local resp = req:render{ json = box.space.kv_store:select() }
+	local resp = req:render{json = { info = "Successfully created" }}
 	resp.status = 201
 
 	return resp
@@ -57,14 +52,14 @@ local function delete(req)
 
 	local tuple = box.space.kv_store:select(key)
 	if( table.getn( tuple ) == 0 ) then
-		local resp = req:render{json = { status = "Key not found" }}
+		local resp = req:render{json = { info = "Key doesn't exist" }}
 		resp.status = 404
 		return resp
 	end
 
 	box.space.kv_store:delete{ key }
 
-	local resp = req:render{ json = box.space.kv_store:select() }
+	local resp = req:render{json = { info = "Successfully deleted" }}
 	resp.status = 200
 
 	return resp
@@ -75,7 +70,7 @@ local function get_tuple(req)
 
 	local tuple = box.space.kv_store:select{ key }
 	if( table.getn( tuple ) == 0 ) then
-		local resp = req:render{json = { status = "Key not found" }}
+		local resp = req:render{json = { info = "Key doesn't exist" }}
 		resp.status = 404
 		return resp
 	end
@@ -92,7 +87,7 @@ local function update(req)
 
 	local tuple = box.space.kv_store:select{ key }
 	if( table.getn( tuple ) == 0 ) then
-		local resp = req:render{json = { status = "Key not found" }}
+		local resp = req:render{json = { info = "Key doesn't exist" }}
 		resp.status = 404
 		return resp
 	end
@@ -102,7 +97,7 @@ local function update(req)
 	log.info("PUT(key: %s)" , key)
 	local tuple = box.space.kv_store:update({key}, {{'=', 2, body['value']}})
 
-	local resp = req:render{ json = box.space.kv_store:select() }
+	local resp = req:render{json = { info = "Successfully updated" }}
 	resp.status = 200
 
 	return resp
@@ -115,7 +110,5 @@ server:route({ path = '/kv/:key', method = 'DELETE' }, delete)
 server:route({ path = '/kv/:key', method = 'GET' }, get_tuple)
 server:route({ path = '/kv/:key', method = 'PUT' }, update)
 
-
-
-
+log.info("Strat server <>")
 server:start()
