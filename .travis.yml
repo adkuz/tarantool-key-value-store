@@ -17,12 +17,12 @@ after_script:
   - make stop
 
 
-deploy:
-  provider: heroku
-  api_key:
-    secure: $HEROKU_API_KEY
-  app: key-value-tarantool
-  on:
-    repo: Alex-Kuz/tarantool-key-value-store
-    branch: develop
-  skip_cleanup: true
+# deploy:
+#   provider: heroku
+#   api_key:
+#     secure: $HEROKU_API_KEY
+#   app: key-value-tarantool
+#   on:
+#     repo: Alex-Kuz/tarantool-key-value-store
+#     branch: develop
+#   skip_cleanup: true
