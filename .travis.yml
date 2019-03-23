@@ -1,0 +1,25 @@
+language: python
+
+services:
+  - docker
+
+
+install:
+  - pip install requests simplejson 
+  - make docker
+  - make run
+
+script:
+  - python test/tests.py
+
+after_script:
+  - make log
+  - make stop
+
+# deploy:
+#   provider: heroku
+#   api_key:
+#     secure: KEY
+#   app: key-value-tarantool
+#   on:
+#     repo: felipeluizsoares/rails-test-app

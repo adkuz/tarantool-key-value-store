@@ -2,7 +2,7 @@ docker_name := ax_tarantool
 docker_tag  := 1
 container_name := ax_tarantool_instance
 src_dir := src
-run_flags := --rm -it 
+run_flags := --rm -it -d
 
 tarantool_log_file := tarantool.log
 
