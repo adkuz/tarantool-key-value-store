@@ -9,7 +9,7 @@ install:
   - make run
 
 script:
-  - python test/tests
+  - python test/tests.py
 
 after_script:
   - make log
