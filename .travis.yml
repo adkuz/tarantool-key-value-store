@@ -1,0 +1,17 @@
+language: python
+
+services:
+  - docker
+
+
+install:
+  - make docker
+  - make run
+
+script:
+  - python test/tests
+
+after_script:
+  - make log
+  - make stop
+
