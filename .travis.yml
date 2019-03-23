@@ -25,3 +25,4 @@ deploy:
   on:
     repo: Alex-Kuz/tarantool-key-value-store
     branch: develop
+  skip_cleanup: true
