@@ -5,7 +5,7 @@ services:
 
 
 install:
-  - pip install requests json 
+  - pip install requests simplejson 
   - make docker
   - make run
 
