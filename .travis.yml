@@ -26,4 +26,7 @@ deploy:
   app: tarantool-kv-store
   on:
     repo: Alex-Kuz/tarantool-key-value-store
+    branch:
+      - feature-deploy
+      - develop
   skip_cleanup: true
