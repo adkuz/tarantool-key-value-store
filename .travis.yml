@@ -23,7 +23,7 @@ deploy:
   provider: heroku
   api_key:
     secure: $HEROKU_API_KEY
-  app: tarantool-kv-store
+  app: key-value-tarantool
   on:
     repo: Alex-Kuz/tarantool-key-value-store
     branch:
