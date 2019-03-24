@@ -1,4 +1,5 @@
 language: python
+
 sudo: required
 
 services:
@@ -9,7 +10,6 @@ install:
   - make docker
   - make run
   - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-  - 
 
 script:
   - make tests
