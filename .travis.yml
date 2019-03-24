@@ -8,6 +8,8 @@ install:
   - pip install requests simplejson 
   - make docker
   - make run
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+  - 
 
 script:
   - python test/tests.py

@@ -1,5 +1,5 @@
-docker_name := ax_tarantool
-docker_tag  := 1
+docker_name := ax4docker/ax_tarantool
+docker_tag  := latest
 container_name := ax_tarantool_instance
 src_dir := src
 run_flags := --rm -it -d
