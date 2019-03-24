@@ -13,20 +13,21 @@ install:
 
 script:
   - make tests
-
-after_script:
   - make log
   - make stop
 
+after_success:
+  - sh .travis/deploy.sh
+  — test “$TRAVIS_BRANCH” = “master” && sh .travis/deploy_heroku.sh
 
-deploy:
-  provider: heroku
-  api_key:
-    secure: $HEROKU_API_KEY
-  app: key-value-tarantool
-  on:
-    repo: Alex-Kuz/tarantool-key-value-store
-    branch:
-      - feature-deploy
-      - develop
-  skip_cleanup: true
+# deploy:
+#   provider: heroku
+#   api_key:
+#     secure: $HEROKU_API_KEY
+#   app: key-value-tarantool
+#   on:
+#     repo: Alex-Kuz/tarantool-key-value-store
+#     branch:
+#       - feature-deploy
+#       - develop
+#   skip_cleanup: true
