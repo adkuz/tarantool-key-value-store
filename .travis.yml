@@ -12,7 +12,7 @@ install:
   - 
 
 script:
-  - python test/tests.py
+  - make tests
 
 after_script:
   - make log

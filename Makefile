@@ -24,3 +24,6 @@ nolan:
 
 log:
 	docker exec -it  ${container_name}  cat ${tarantool_log_file}
+
+tests:
+	python test/tests.py
