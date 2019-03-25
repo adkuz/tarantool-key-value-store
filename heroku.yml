@@ -1,7 +1,9 @@
 build:
-  script:
-    - make docker
+  kv-store-server:
+    command:
+      - make docker
     
 run:
-  script:
-    - make run
+  kv-store-server:
+    command:
+      - make run

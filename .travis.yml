@@ -1,4 +1,5 @@
 language: python
+
 sudo: required
 
 services:
@@ -8,10 +9,25 @@ install:
   - pip install requests simplejson 
   - make docker
   - make run
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
 script:
-  - python test/tests.py
-
-after_script:
+  - make tests
   - make log
   - make stop
+
+after_success:
+  - sh .travis/deploy.sh
+  - sh .travis/deploy_heroku.sh
+
+# deploy:
+#   provider: heroku
+#   api_key:
+#     secure: $HEROKU_API_KEY
+#   app: key-value-tarantool
+#   on:
+#     repo: Alex-Kuz/tarantool-key-value-store
+#     branch:
+#       - feature-deploy
+#       - develop
+#   skip_cleanup: true
