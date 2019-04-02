@@ -1,0 +1,9 @@
+build:
+  web:
+    command:
+      - make docker
+    
+run:
+  web:
+    command:
+      - make run
