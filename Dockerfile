@@ -6,9 +6,11 @@ RUN ./install-tarantool.sh
 
 EXPOSE 80
 
+USER root
+
 COPY src /opt/tarantool
 
 RUN ls -lA /opt/tarantool
 
-ENTRYPOINT [ "sudo", "tarantool" ]
+ENTRYPOINT [ "tarantool" ]
 CMD ["/opt/tarantool/main.lua"]
