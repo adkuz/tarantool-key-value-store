@@ -1,9 +1,0 @@
-build:
-  kv-store-server:
-    command:
-      - make docker
-    
-run:
-  kv-store-server:
-    command:
-      - make run
