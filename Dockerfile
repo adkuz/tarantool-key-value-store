@@ -10,5 +10,5 @@ COPY src /opt/tarantool
 
 RUN ls -lA /opt/tarantool
 
-ENTRYPOINT [ "tarantool" ]
+ENTRYPOINT [ "sudo", "tarantool" ]
 CMD ["/opt/tarantool/main.lua"]

@@ -159,7 +159,7 @@ server:route({ path = '/kv/:key', method = 'DELETE' }, delete)
 server:route({ path = '/kv/:key', method = 'GET' }, get_tuple)
 server:route({ path = '/kv/:key', method = 'PUT' }, update)
 
-server:route({ path = '/kv/all_records', method = 'GET' }, get_all_kv)
+server:route({ path = '/info/kv/all_records', method = 'GET' }, get_all_kv)
 
 
 server:start()
