@@ -68,6 +68,7 @@ SEQUENCE = [
     Action(GET, 404, key='key_obj', body=None, comment='delete: key "key_obj" deleted'),
 ]
 
+
 class TestApi(unittest.TestCase):
 
     api = KeyValueStoreApi('127.0.0.1', 80)

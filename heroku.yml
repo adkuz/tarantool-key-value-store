@@ -6,4 +6,4 @@ build:
 run:
   web:
     command:
-      - make run
+      - make port=$PORT run

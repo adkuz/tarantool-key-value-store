@@ -6,13 +6,14 @@ run_flags := --rm -it -d
 
 tarantool_log_file := tarantool.log
 
+port := 80
 
 docker:
 	docker build -t ${docker_name}:${docker_tag} -f Dockerfile ./
 	
 run:
 	docker run ${run_flags} --name ${container_name} \
-		-p 127.0.0.1:${PORT}:80 \
+		-p 127.0.0.1:${port}:80 \
 		--net=host\
         ${docker_name}:${docker_tag}
 
