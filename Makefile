@@ -13,7 +13,7 @@ docker:
 	
 run:
 	docker run ${run_flags} --name ${container_name} \
-		-p 127.0.0.1:${port}:80 \
+		-p 0.0.0.0:${port}:80 \
 		--net=host\
         ${docker_name}:${docker_tag}
 
