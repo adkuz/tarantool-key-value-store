@@ -4,13 +4,15 @@ COPY scripts/install-tarantool.sh ./install-tarantool.sh
 RUN chmod +x ./install-tarantool.sh
 RUN ./install-tarantool.sh
 
-EXPOSE 80
+RUN useradd -m myuser
+USER myuser
 
-USER root
-
+WORKDIR /home/myuser
 COPY src /opt/tarantool
 
 RUN ls -lA /opt/tarantool
+
+RUN touch ./tarantool.log
 
 ENTRYPOINT [ "tarantool" ]
 CMD ["/opt/tarantool/main.lua"]

@@ -6,7 +6,7 @@ local log = require('log')
 local json = require('json')
 
 box.cfg{
-	log = 'tarantool.log'
+	log = './tarantool.log'
 }
 
 box.once('schema', 
@@ -151,15 +151,15 @@ local function get_all_kv(req)
 	return resp
 end
 
--- local function get_port(default)
---     local port = os.getenv("PORT")
---     if port == nil then
---         return default
---     end
---     return port
--- end
+local function get_port(env_port, default)
+    local port = os.getenv("PORT")
+    if port == nil then
+        return default
+    end
+    return port
+end
 
-local server = httpd.new('127.0.0.1', 80)
+local server = httpd.new('127.0.0.1', get_port("PORT", 5000))
 
 server:route({ path = '/kv', method = 'POST' }, create)
 server:route({ path = '/kv/:key', method = 'DELETE' }, delete)

@@ -6,15 +6,16 @@ run_flags := --rm -it -d
 
 tarantool_log_file := tarantool.log
 
-port := 80
+PORT :=5000
 
 docker:
 	docker build -t ${docker_name}:${docker_tag} -f Dockerfile ./
 	
 run:
 	docker run ${run_flags} --name ${container_name} \
-		-p 0.0.0.0:${port}:80 \
-		--net=host\
+		-p ${PORT}:5000 \
+		-e PORT=5000 \
+		--net=host \
         ${docker_name}:${docker_tag}
 
 stop:

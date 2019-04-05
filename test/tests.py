@@ -71,7 +71,7 @@ SEQUENCE = [
 
 class TestApi(unittest.TestCase):
 
-    api = KeyValueStoreApi('127.0.0.1', 80)
+    api = KeyValueStoreApi('0.0.0.0', 5000)
 
     def test_sequence(self, seq=SEQUENCE):
         for i, action in enumerate(seq):

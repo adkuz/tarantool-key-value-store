@@ -2,5 +2,5 @@ build:
   docker:
     web: ax4docker/ax_tarantool:develop
 
-run:
-  web: docker run -d --rm --name heroku_ax_tarantool -p 0.0.0.0:${port}:80 ax4docker/ax_tarantool:develop
+# run:
+#   web: docker run -d --rm --name heroku_ax_tarantool -p 0.0.0.0:${PORT}:8080 ax4docker/ax_tarantool:develop
