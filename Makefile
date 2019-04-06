@@ -6,7 +6,7 @@ run_flags := --rm -it -d
 
 tarantool_log_file := tarantool.log
 
-PORT :=5000
+PORT := 5000
 
 docker:
 	docker build -t ${docker_name}:${docker_tag} -f Dockerfile ./
@@ -29,3 +29,7 @@ log:
 
 tests:
 	python test/tests.py
+
+
+heroku-log:
+	heroku logs --tail --app key-value-tarantool
