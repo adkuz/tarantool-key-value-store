@@ -4,5 +4,5 @@ heroku plugins:install @heroku-cli/plugin-container-registry
 
 echo "$HEROKU_API_KEY" | docker login -u _  --password-stdin registry.heroku.com
 
-# heroku container:push web --app $HEROKU_APP_NAME
+heroku container:push web --app $HEROKU_APP_NAME
 heroku container:release web --app $HEROKU_APP_NAME
