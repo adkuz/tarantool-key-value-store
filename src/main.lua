@@ -151,17 +151,38 @@ local function get_all_kv(req)
 	return resp
 end
 
+
+local function about(req)
+	local resp = req:render{json = {
+        api = {
+            { path = '/kv', method = 'POST' },
+            { path = '/kv/:key', method = 'DELETE' },
+            { path = '/kv/:key', method = 'GET' }, 
+            { path = '/kv/:key', method = 'PUT' }, 
+            { path = '/info/kv/all_records', method = 'GET' },
+        },
+        developer = "__ax__"
+    }}
+	resp.status = 200
+	log.info("about(200)")
+	return resp
+end
+
 local function get_port(env_port, default)
     local port = os.getenv(env_port)
-    log.info("PORT is ", port)
+    io.write("PORT is " .. port)
     if port == nil then
         return default
     end
     return port
 end
 
+
+
 local server = httpd.new('127.0.0.1', get_port("PORT", 5000))
 
+
+server:route({ path = '/', method = 'GET' }, about)
 server:route({ path = '/kv', method = 'POST' }, create)
 server:route({ path = '/kv/:key', method = 'DELETE' }, delete)
 server:route({ path = '/kv/:key', method = 'GET' }, get_tuple)
