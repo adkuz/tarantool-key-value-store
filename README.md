@@ -39,7 +39,7 @@ $ make tests                       # local tests
 $ make heroku-test                 # test heroku app
 ```
 
-# Stop Application
+### Stop Application
 ```sh
 $ make stop
 ```
