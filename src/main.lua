@@ -179,7 +179,7 @@ end
 
 
 
-local server = httpd.new('127.0.0.1', get_port("PORT", 5000))
+local server = httpd.new('0.0.0.0', get_port("PORT", 5000))
 
 
 server:route({ path = '/', method = 'GET' }, about)
