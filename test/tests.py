@@ -1,14 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import unittest
 from json import dumps as json_dumps
 
 from api import KeyValueStoreApi, DELETE, POST, PUT, GET
 
-PATH = '/kv'
+
 
 class Action():
+    
+    path = '/kv'
 
     def __init__(self, method, expected_code, body, json=True, key=None, expected_body=None, comment=None):
         self.method = method
@@ -27,9 +30,9 @@ class Action():
         self.cmt = comment
 
     def make_path(self):
-        return '{}/{}'.format(PATH, self.key) if self.key else PATH 
+        return '{}/{}'.format(self.path, self.key) if self.key else self.path 
 
-    def perform(self, api, tester):
+    def perform(self, tester, api):
         code, _ = api.make_request(self.method, self.make_path(), data=self.body if self.body else None)
         tester.assertEqual(code, self.ex_code, self.cmt)
 
@@ -71,14 +74,34 @@ SEQUENCE = [
 
 class TestApi(unittest.TestCase):
 
-    api = KeyValueStoreApi('0.0.0.0', 5000)
+    api = None
 
     def test_sequence(self, seq=SEQUENCE):
+
         for i, action in enumerate(seq):
             print i
-            action.perform(self.api, self)
+            action.perform(self, self.api)
+
+
+
+URLS = {
+    'local': ('127.0.0.1', 5000),
+    'heroku': ('key-value-tarantool.herokuapp.com', 80)
+}
 
 
 
 if __name__ == '__main__':
+
+    url = 'local' if len(sys.argv) < 2 else sys.argv[1]
+    
+    if url not in URLS:
+        print "{url} is not in URL: testing local".format(url=url)
+        url = 'local'
+
+    if url in sys.argv:
+        sys.argv.remove(url)
+
+    TestApi.api = KeyValueStoreApi(*(URLS[url]))
+
     unittest.main()

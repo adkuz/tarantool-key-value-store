@@ -30,6 +30,8 @@ log:
 tests:
 	python test/tests.py
 
+heroku-tests:
+	python test/tests.py heroku
 
 heroku-log:
 	heroku logs --tail --app key-value-tarantool
