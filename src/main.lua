@@ -152,7 +152,8 @@ local function get_all_kv(req)
 end
 
 local function get_port(env_port, default)
-    local port = os.getenv("PORT")
+    local port = os.getenv(env_port)
+    log.info("PORT is ", port)
     if port == nil then
         return default
     end
